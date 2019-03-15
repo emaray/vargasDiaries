@@ -16,7 +16,8 @@ def splitPages(pageNumber):
 		diaryText = diaryBook.read()
 		# for line in diaryText:
 		# 	entryDate = re.findall('Entry Date.+', diaryText)
-		diaryText = re.sub('(.{1}cont.{2}\n+){1,2}Entry\sDate.+\n+Tags.+','',diaryText)
+		diaryText = re.sub('(.{1}cont.{2}\n+){1,2}(Entry\sDate.+\n+)Tags.+','',diaryText)
+
 		try:
 			diaryText = re.sub('cont.{1}\n+Entry\sDate.+\n+Tags.+','',diaryText)
 		except:
@@ -30,7 +31,7 @@ def splitPages(pageNumber):
 		for page in diaryPageList:
 			page = unidecode.unidecode(page)
 
-			with open('%s.txt' %(pageNumber), 'w', encoding='UTF-8') as diaryPage:
+			with open('%s_%s.txt' %(fileName, pageNumber), 'w', encoding='UTF-8') as diaryPage:
 				diaryPage.write(page)
 			with open('%s_plainText.txt' %(fileName), 'a', encoding='UTF-8') as plainText:
 				justDiaryText = re.sub('________________','',page)
